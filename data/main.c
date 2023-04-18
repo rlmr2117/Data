@@ -1,43 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
+#define MAX_SIZE 10
 
-typedef struct student {
-	int id;
-	char name[20];
-	char dept[32];
-} Student ;
-void test1(Student s);
-void test2(Student* s);
-Student test3(Student s);
+int stack1[MAX_SIZE];
+int stack2[MAX_SIZE];
+int top1 = -1;
+int top2 = -1;
+
+void enqueue(int data) {
+    if (top1 == MAX_SIZE - 1) {
+        printf("Queue is full.\n");
+        return;
+    }
+    stack1[++top1] = data;
+}
+
+int dequeue() {
+    if (top1 == -1 && top2 == -1) {
+        printf("Queue is empty.\n");
+        return -1;
+    }
+    if (top2 == -1) {
+        while (top1 != -1) {
+            stack2[++top2] = stack1[top1--];
+        }
+    }
+    int data = stack2[top2--];
+    return data;
+}
+
 int main() {
-	Student s1, s2;
-	Student* ps = &s2;
-
-	s1.id = 10;
-	strcpy(s1.name, "park");
-	strcpy(s1.dept, "Computer Eng");
-	*ps = s1;
-	printf("ps->id : %d\tps->name : %s,\tps->dept : %s\n", ps->id, ps->name, ps->dept);
-	test1(s2);
-	printf("ps->id : %d\tps->name : %s,\tps->dept : %s\n", ps->id, ps->name, ps->dept);
-	test2(ps);
-	printf("ps->id : %d\tps->name : %s,\tps->dept : %s\n", ps->id, ps->name, ps->dept);
-	s2 = test3(s2);
-	printf("ps->id : %d\tps->name : %s,\tps->dept : %s\n", ps->id, ps->name, ps->dept);
-	return 0;
-}
-
-void test1(Student s) {
-	s.id = 20;
-}
-
-void test2(Student* s) {
-	s->id = 20;
-}
-
-Student test3(Student s) {
-	s.id = 30;
-	return s;
+    enqueue(1);
+    enqueue(2);
+    enqueue(3);
+    printf("%d ", dequeue());
+    printf("%d ", dequeue());
+    enqueue(4);
+    printf("%d ", dequeue());
+    printf("%d ", dequeue());
+    printf("%d ", dequeue());
+    return 0;
 }
