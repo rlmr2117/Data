@@ -10,7 +10,7 @@ int top2 = -1;
 
 void enqueue(int data) {
     if (top1 == MAX_SIZE - 1) {
-        printf("Queue is full.\n");
+        printf("큐 포화\n");
         return;
     }
     stack1[++top1] = data;
@@ -18,7 +18,7 @@ void enqueue(int data) {
 
 int dequeue() {
     if (top1 == -1 && top2 == -1) {
-        printf("Queue is empty.\n");
+        printf("큐 공백 \n");
         return -1;
     }
     if (top2 == -1) {
